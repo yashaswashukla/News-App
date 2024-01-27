@@ -3,15 +3,10 @@ import React from "react";
 const NewsItem = (props) => {
   return (
     <>
-      <div className="card mb-3">
+      <div className={`card border-${props.mode} text-bg-${props.mode}`}>
         <img
-          src={
-            props.imageUrl
-              ? props.imageUrl
-              : "https://static.vecteezy.com/system/resources/thumbnails/006/299/370/original/world-breaking-news-digital-earth-hud-rotating-globe-rotating-free-video.jpg"
-          }
+          src={props.imageUrl ? props.imageUrl : "./news.jpg"}
           className="card-img-top"
-          alt="..."
         />
         <div className="card-body">
           <h5 className="card-title">{props.title}...</h5>

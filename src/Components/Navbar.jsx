@@ -1,12 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const Navbar = () => {
+import Switch from "react-switch";
+
+const Navbar = (props) => {
   return (
     <>
-      <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary">
+      <nav
+        className={`navbar fixed-top navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}
+      >
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
-            Navbar
+            Daily News
           </a>
           <button
             className="navbar-toggler"
@@ -82,6 +86,46 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
+          <Switch
+            onChange={props.toggleMode}
+            checked={props.mode === "light" ? false : true}
+            onColor="#092e40"
+            onHandleColor="#25afee"
+            offColor="#fae9b1"
+            offHandleColor="#f2c138"
+            handleDiameter={18}
+            height={22}
+            width={40}
+            padding
+            uncheckedIcon={false}
+            checkedIcon={false}
+            uncheckedHandleIcon={
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  color: "red",
+                }}
+              >
+                <img src="./Light.png" alt="" height="15" />
+              </div>
+            }
+            checkedHandleIcon={
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  color: "red",
+                }}
+              >
+                <img src="./Dark.png" alt="" height="15" />
+              </div>
+            }
+          />
         </div>
       </nav>
     </>

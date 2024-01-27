@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import NewsItem from "./NewsItem";
 import PropTypes from "prop-types";
-import Spinner from "./Spinner";
 import InfiniteScroll from "react-infinite-scroll-component";
-
+import Loader from "./Loader";
+import "react-spinner-animated/dist/index.css";
 const News = (props) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -57,7 +57,14 @@ const News = (props) => {
 
   return (
     <div className="container my-4">
-      <h1 className="text-center" style={{ margin: "30px", marginTop: "80px" }}>
+      <h1
+        className="text-center"
+        style={{
+          margin: "30px",
+          marginTop: "80px",
+          color: props.mode === "light" ? "black" : "white",
+        }}
+      >
         Top Headlines - {capitalize(props.category)}
       </h1>
 
@@ -68,7 +75,9 @@ const News = (props) => {
           hasMore={articles !== totalResults}
           loader={
             Math.ceil(totalResults / props.pageSize) > page + 1 ? (
-              <Spinner />
+              <div className="d-flex justify-content-center">
+                <Loader />
+              </div>
             ) : (
               ""
             )
@@ -80,6 +89,7 @@ const News = (props) => {
                 return (
                   <div className="col-md-4" key={element.url}>
                     <NewsItem
+                      mode={props.mode}
                       title={element.title.slice(0, 50)}
                       description={
                         element.description
