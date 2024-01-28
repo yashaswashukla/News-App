@@ -94,8 +94,8 @@ const Navbar = (props) => {
             offColor="#fae9b1"
             offHandleColor="#f2c138"
             handleDiameter={18}
-            height={22}
-            width={40}
+            height={25}
+            width={50}
             padding
             uncheckedIcon={false}
             checkedIcon={false}
