@@ -9,9 +9,11 @@ const Navbar = (props) => {
         className={`navbar fixed-top navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}
       >
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
-            Daily News
-          </a>
+          <div style={{ fontWeight: "bold" }}>
+            <Link className="navbar-brand" aria-current="page" to="/">
+              Daily News
+            </Link>
+          </div>
           <button
             className="navbar-toggler"
             type="button"
@@ -26,15 +28,10 @@ const Navbar = (props) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
                 <Link
                   className="nav-link active"
                   aria-current="page"
-                  to="/business"
+                  to="business"
                 >
                   Business
                 </Link>
@@ -43,7 +40,7 @@ const Navbar = (props) => {
                 <Link
                   className="nav-link active"
                   aria-current="page"
-                  to="/entertainment"
+                  to="entertainment"
                 >
                   Entertainment
                 </Link>
@@ -52,7 +49,7 @@ const Navbar = (props) => {
                 <Link
                   className="nav-link active"
                   aria-current="page"
-                  to="/health"
+                  to="health"
                 >
                   Health
                 </Link>
@@ -61,7 +58,7 @@ const Navbar = (props) => {
                 <Link
                   className="nav-link active"
                   aria-current="page"
-                  to="/science"
+                  to="science"
                 >
                   Science
                 </Link>
@@ -70,7 +67,7 @@ const Navbar = (props) => {
                 <Link
                   className="nav-link active"
                   aria-current="page"
-                  to="/sports"
+                  to="sports"
                 >
                   Sports
                 </Link>
@@ -79,53 +76,53 @@ const Navbar = (props) => {
                 <Link
                   className="nav-link active"
                   aria-current="page"
-                  to="/technology"
+                  to="technology"
                 >
                   Technology
                 </Link>
               </li>
             </ul>
+            <Switch
+              onChange={props.toggleMode}
+              checked={props.mode === "light" ? false : true}
+              onColor="#092e40"
+              onHandleColor="#25afee"
+              offColor="#fae9b1"
+              offHandleColor="#f2c138"
+              handleDiameter={18}
+              height={25}
+              width={50}
+              padding
+              uncheckedIcon={false}
+              checkedIcon={false}
+              uncheckedHandleIcon={
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+                    color: "red",
+                  }}
+                >
+                  <img src="./Light.png" alt="" height="15" />
+                </div>
+              }
+              checkedHandleIcon={
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+                    color: "red",
+                  }}
+                >
+                  <img src="./Dark.png" alt="" height="15" />
+                </div>
+              }
+            />
           </div>
-          <Switch
-            onChange={props.toggleMode}
-            checked={props.mode === "light" ? false : true}
-            onColor="#092e40"
-            onHandleColor="#25afee"
-            offColor="#fae9b1"
-            offHandleColor="#f2c138"
-            handleDiameter={18}
-            height={25}
-            width={50}
-            padding
-            uncheckedIcon={false}
-            checkedIcon={false}
-            uncheckedHandleIcon={
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                  color: "red",
-                }}
-              >
-                <img src="./Light.png" alt="" height="15" />
-              </div>
-            }
-            checkedHandleIcon={
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                  color: "red",
-                }}
-              >
-                <img src="./Dark.png" alt="" height="15" />
-              </div>
-            }
-          />
         </div>
       </nav>
     </>
