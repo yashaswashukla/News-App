@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "./Loader";
 import "react-spinner-animated/dist/index.css";
-const News = (props) => {
+const News = ({ country, category, pageSize, mode, setProgress }) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -14,36 +14,33 @@ const News = (props) => {
     return category.charAt(0).toUpperCase() + category.slice(1);
   };
 
-  // document.title = `${this.capitalize(props.category)} - NewsApp`;
-
-  const updateNews = async () => {
-    props.setProgress(0);
-
-    let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=962f603a690c4815a41e19f530fe3656&page=${page}&pageSize=${props.pageSize}`;
-
-    setLoading(true);
-
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    props.setProgress(20);
-
-    setArticles(parsedData.articles);
-    setTotalResults(parsedData.totalResults);
-    setLoading(false);
-
-    props.setProgress(100);
-  };
+  // document.title = `${this.capitalize(category)} - NewsApp`;
 
   useEffect(() => {
+    const updateNews = async () => {
+      setProgress(0);
+      console.log(process.env.NEWS_API_KEY);
+      let url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}&page=1&pageSize=${pageSize}`;
+
+      setLoading(true);
+
+      let data = await fetch(url);
+      let parsedData = await data.json();
+      setProgress(20);
+
+      setArticles(parsedData.articles);
+      setTotalResults(parsedData.totalResults);
+      setLoading(false);
+
+      setProgress(100);
+    };
     updateNews();
-  }, []);
+  }, [country, category, pageSize, setProgress]);
 
   const fetchMore = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=${
-      props.country
-    }&category=${props.category}&apiKey=962f603a690c4815a41e19f530fe3656&page=${
-      page + 1
-    }&pageSize=${props.pageSize}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${
+      process.env.REACT_APP_NEWS_API_KEY
+    }&page=${page + 1}&pageSize=${pageSize}`;
 
     setPage(page + 1);
 
@@ -62,10 +59,10 @@ const News = (props) => {
         style={{
           margin: "30px",
           marginTop: "80px",
-          color: props.mode === "light" ? "black" : "white",
+          color: mode === "light" ? "black" : "white",
         }}
       >
-        Top Headlines - {capitalize(props.category)}
+        Top Headlines - {capitalize(category)}
       </h1>
 
       <div>
@@ -74,7 +71,7 @@ const News = (props) => {
           next={fetchMore}
           hasMore={articles !== totalResults}
           loader={
-            Math.ceil(totalResults / props.pageSize) > page + 1 ? (
+            Math.ceil(totalResults / pageSize) > page + 1 ? (
               <div className="d-flex justify-content-center">
                 <Loader />
               </div>
@@ -85,11 +82,11 @@ const News = (props) => {
         >
           <div className="row my-3">
             {articles.map((element) => {
-              if (typeof element != "undefined")
+              if (typeof element != "undefined") {
                 return (
                   <div className="col-md-4" key={element.url}>
                     <NewsItem
-                      mode={props.mode}
+                      mode={mode}
                       title={element.title.slice(0, 50)}
                       description={
                         element.description
@@ -103,6 +100,9 @@ const News = (props) => {
                     />
                   </div>
                 );
+              } else {
+                return <div></div>;
+              }
             })}
           </div>
         </InfiniteScroll>
